@@ -1,0 +1,2 @@
+readPed.cxx把pd1修改成mdat格式
+analysis.C是root分析程序，选择pad后 点击analysis，暂时只能单通道，
