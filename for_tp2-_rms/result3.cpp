@@ -21,21 +21,42 @@
 #include <TApplication.h>
 #include <TLatex.h>
 #include <TText.h>
+#include <fstream>
+#include <iomanip>//scientific format
 
-//int result3(const char *no)
-int result3()
+using namespace std;
+int main(int argc, char **argv)
 {
+char *pedefile;
+pedefile = argv[1];
+int pedeId;
+pedeId = atol(argv[2]);
+// char *store_file_name;
+// store_file_name = argv[3];
+
+char pedefn[100];
+sprintf(pedefn,"%s_%d.txt", pedefile, pedeId);
+//sprintf(beamfn,"../data/runData/%s/", store_file_name);
+
 Double_t noise[4];
 
 TCanvas *c1=new TCanvas("cc","rms",1800,1200);
 
 //FILE *n=fopen(no,"r+");
-FILE *n1=fopen("./beam_1.txt","r+");
+FILE *n1=fopen(pedefn,"r+");
 
 if (!n1) {
-      std::cout << "Unable to open file "  <<std::endl;
+      std::cout << "Unable to open pd1 file "  <<std::endl;
       return -1; 
    }  
+
+//FILE *n2=fopen("./rms_txt/rms.txt","r+");
+ofstream n2("./rms_txt/rms.txt");
+
+// if (!n2) {
+//       std::cout << "Unable to open rms.txt file "  <<std::endl;
+//       return -1; 
+//    }  
 
 Double_t x[8][5184];
 Double_t y[8][5184]; 
@@ -126,9 +147,30 @@ c1->cd(j+1);
 nois[j]->Draw("ap");
 nois[j]->SetMarkerStyle(7);
 nois[j]->SetMarkerSize(0.7);
-//Return RMS of X (axis=1) or Y (axis=2)
 double x = nois[j]->GetRMS(2);
+/*
+//Return RMS of X (axis=1) or Y (axis=2)
+ Double_t TGraph::GetRMS(Int_t axis) const
+ {
+    if (axis < 1 || axis > 2) return 0;
+    if (fNpoints <= 0) return 0;
+    Double_t sumx = 0, sumx2 = 0;
+    for (Int_t i = 0; i < fNpoints; i++) {
+       if (axis == 1) {
+          sumx += fX[i];
+          sumx2 += fX[i] * fX[i];
+       } else           {
+          sumx += fY[i];
+          sumx2 += fY[i] * fY[i];
+       }
+    }
+    Double_t x = sumx / fNpoints;
+    Double_t rms2 = TMath::Abs(sumx2 / fNpoints - x * x);
+    return TMath::Sqrt(rms2);
+ } 
+*/
 //cout<<x<<endl;
+n2<< fixed << setprecision(6) << x <<" ";
 TLatex* lt = new TLatex();
 lt->SetTextSize(0.06);
 lt->SetTextAlign(13);
@@ -136,7 +178,8 @@ lt->DrawLatexNDC(0.15,0.85,TString::Format("%.6f",x));
 c1->Modified();
 c1->Update();
 }
-c1->SaveAs(TString::Format("rms.png"));
+//c1->Draw();
+c1->SaveAs(TString::Format("rms_beam_%d.png",pedeId));
 
 fclose(n1);
 return 0;
