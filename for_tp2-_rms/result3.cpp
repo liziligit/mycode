@@ -49,7 +49,7 @@ if (!n1) {
       return -1; 
    }  
 
-ofstream n2("./rms_txt/rms.txt");
+ofstream n2("./rms_txt/0rms.txt",ios::app);
 assert(n2); 
 
 Double_t x[8][5184];
@@ -122,7 +122,7 @@ c1->Divide(4,2);
 TGraph *nois[8];
 TF1 *fpol[8];
 
-
+n2<< "beam_" << pedeId << " ";
 for(int j=0;j<8;j++)
 {
 nois[j]=new TGraph(5184,x[j],y[j]);
@@ -164,7 +164,7 @@ double x = nois[j]->GetRMS(2);
  } 
 */
 //cout<<x<<endl;
-n2<< fixed << setprecision(6) << x <<" ";
+n2 << fixed << setprecision(6) << x <<" ";
 TLatex* lt = new TLatex();
 lt->SetTextSize(0.06);
 lt->SetTextAlign(13);
@@ -174,7 +174,7 @@ c1->Update();
 }
 n2<<"\n";
 //c1->Draw();
-c1->SaveAs(TString::Format("rms_beam_%d.png",pedeId));
+c1->SaveAs(TString::Format("./rms_txt/rms_beam_%d.png",pedeId));
 
 fclose(n1);
 n2.close();
