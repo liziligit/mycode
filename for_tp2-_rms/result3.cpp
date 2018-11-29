@@ -42,7 +42,6 @@ Double_t noise[4];
 
 TCanvas *c1=new TCanvas("cc","rms",1800,1200);
 
-//FILE *n=fopen(no,"r+");
 FILE *n1=fopen(pedefn,"r+");
 
 if (!n1) {
@@ -50,13 +49,8 @@ if (!n1) {
       return -1; 
    }  
 
-//FILE *n2=fopen("./rms_txt/rms.txt","r+");
 ofstream n2("./rms_txt/rms.txt");
-
-// if (!n2) {
-//       std::cout << "Unable to open rms.txt file "  <<std::endl;
-//       return -1; 
-//    }  
+assert(n2); 
 
 Double_t x[8][5184];
 Double_t y[8][5184]; 
@@ -178,9 +172,11 @@ lt->DrawLatexNDC(0.15,0.85,TString::Format("%.6f",x));
 c1->Modified();
 c1->Update();
 }
+n2<<"\n";
 //c1->Draw();
 c1->SaveAs(TString::Format("rms_beam_%d.png",pedeId));
 
 fclose(n1);
+n2.close();
 return 0;
 }
