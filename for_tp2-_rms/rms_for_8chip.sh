@@ -14,12 +14,12 @@ then
 fi
 
 pedeFile=./beam_txt/beam
+g++  rms_for_8chip.cpp -o rms_for_8chip `root-config --cflags` `root-config --glibs`
 
 #for((i=$1;i<=$2; i++)) can work too
 for((i=${pedeStart};i<=${pedeEnd}; i++))
 do
-g++  result3.cpp -o result3 `root-config --cflags` `root-config --glibs`
-./result3 ${pedeFile} ${i}
-sleep 3
+./rms_for_8chip ${pedeFile} ${i}
+sleep 1
 done
 

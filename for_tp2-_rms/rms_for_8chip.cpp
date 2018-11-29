@@ -1,3 +1,6 @@
+//lizili
+//719 radiation test for 8 Topmetal-II-, this code is for calculating rms of each chip
+
 #include <iostream>
 #include <string>
 #include <TFile.h>
@@ -122,7 +125,7 @@ c1->Divide(4,2);
 TGraph *nois[8];
 TF1 *fpol[8];
 
-n2<< "beam_" << pedeId << " ";
+n2<< pedeId << " ";
 for(int j=0;j<8;j++)
 {
 nois[j]=new TGraph(5184,x[j],y[j]);
