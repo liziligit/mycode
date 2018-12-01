@@ -13,7 +13,7 @@ then
   exit
 fi
 
-pedeFile=./beam_txt/beam
+pedeFile=../beam_txt/beam
 g++  rms_for_8chip.cpp -o rms_for_8chip `root-config --cflags` `root-config --glibs`
 
 #for((i=$1;i<=$2; i++)) can work too
