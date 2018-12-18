@@ -37,6 +37,7 @@ rmsfile = argv[2];
 
 
 char rmsfn[100];
+char rdfn2[100];
 //sprintf(rmsfn,"%s.txt", rmsfile);
 sprintf(rmsfn,"%s%s.txt", rms_dir, rmsfile);
 //sprintf(beamfn,"../data/runData/%s/", store_file_name);
@@ -52,7 +53,9 @@ if (!n1) {
       return -1; 
    }  
 
-ofstream n2("./rms_rms_txt/noradiation_rms_rms.txt",ios::app);
+sprintf(rdfn2,"./rms_rms_txt/%s_rms_rms.txt", rmsfile);
+ofstream n2(rdfn2,ios::app);
+//ofstream n2("./rms_rms_txt/noradiation_rms_rms.txt",ios::app);
 //radiation_rms_rms.txt or noradiation_rms_rms.txt
 assert(n2); 
 
@@ -136,7 +139,7 @@ c1->Update();
 }
 n2<<"\n";
 //c1->Draw();
-c1->SaveAs(TString::Format("./rms_rms_txt/rms_rms_%s.png",rmsfile));
+c1->SaveAs(TString::Format("./rms_rms_txt/%s_rms_rms.png",rmsfile));
 
 fclose(n1);
 n2.close();
